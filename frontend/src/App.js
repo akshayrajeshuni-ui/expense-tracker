@@ -19,7 +19,7 @@ function App() {
 
   // Fetch data
   const fetchExpenses = async () => {
-    const res = await axios.get("http://localhost:5000/api/expenses");
+    const res = await axios.get("https://expense-tracker-backend-a0cg.onrender.com/api/expenses");
     setExpenses(res.data);
   };
 
