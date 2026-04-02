@@ -1,0 +1,62 @@
+import React, { useState } from "react";
+import axios from "axios";
+
+function ExpenseForm({ refresh }) {
+  const [data, setData] = useState({
+    title: "",
+    amount: "",
+    category: "",
+    date:"",
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await axios.post("http://localhost:5000/api/expenses", data);
+    alert("Expense Added");
+
+    refresh(); // 🔥 triggers update
+
+    // clear form (optional)
+    setData({ title: "", amount: "", category: "" });
+  };
+
+ return (
+  <form onSubmit={handleSubmit} className="mb-4 space-y-2">
+
+    <input
+      className="w-full p-2 border rounded bg-white text-black dark:bg-gray-700 dark:text-white"
+      placeholder="Title"
+      value={data.title}
+      onChange={(e) => setData({ ...data, title: e.target.value })}
+    />
+
+    <input
+      className="w-full p-2 border rounded bg-white text-black dark:bg-gray-700 dark:text-white"
+      placeholder="Amount"
+      value={data.amount}
+      onChange={(e) => setData({ ...data, amount: e.target.value })}
+    />
+
+    <input
+      className="w-full p-2 border rounded bg-white text-black dark:bg-gray-700 dark:text-white"
+      placeholder="Category"
+      value={data.category}
+      onChange={(e) => setData({ ...data, category: e.target.value })}
+    />
+
+    <input
+      type="date"
+      className="w-full p-2 border rounded bg-white text-black dark:bg-gray-700 dark:text-white"
+      value={data.date}
+      onChange={(e) => setData({ ...data, date: e.target.value })}
+    />
+
+    <button className="w-full bg-blue-500 text-white p-2 rounded">
+      Add Expense
+    </button>
+
+  </form>
+);
+}
+
+export default ExpenseForm;
