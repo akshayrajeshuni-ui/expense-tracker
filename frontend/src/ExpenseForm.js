@@ -11,7 +11,7 @@ function ExpenseForm({ refresh }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:5000/api/expenses", data);
+    await axios.post("https://expense-tracker-backend-a0cg.onrender.com/api/expenses", data);
     alert("Expense Added");
 
     refresh(); // 🔥 triggers update

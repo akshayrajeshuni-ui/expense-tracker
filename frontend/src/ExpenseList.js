@@ -4,7 +4,7 @@ import axios from "axios";
 function ExpenseList({ expenses, refresh }) {
 
   const deleteExpense = async (id) => {
-    await axios.delete(`http://localhost:5000/api/expenses/${id}`);
+    await axios.delete(`https://expense-tracker-backend-a0cg.onrender.com/api/expenses/${id}`);
     refresh(); // 🔥 update list after delete
   };
 
