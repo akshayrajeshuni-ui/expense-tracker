@@ -104,8 +104,6 @@ function App() {
     .filter((e) => new Date(e.date).getMonth() === currentMonth)
     .reduce((sum, e) => sum + e.amount, 0);
 
-  const years = [...new Set(expenses.map((e) => new Date(e.date).getFullYear()))];
-
   // Export to Excel
   const exportToExcel = () => {
     const data = filteredExpenses.map((e) => ({
