@@ -26,11 +26,11 @@ function App() {
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [expenses, setExpenses] = useState([]);
-  const [filter, setFilter] = useState("all");
-  const [selectedYear, setSelectedYear] = useState("all");
+  const [filter] = useState("all");
+  const [selectedYear] = useState("all");
   const [theme, setTheme] = useState("light");
-  const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
+  const [fromDate] = useState("");
+  const [toDate] = useState("");
 
   // ✅ Create userId once when app loads
   useEffect(() => {
@@ -105,7 +105,6 @@ function App() {
     .reduce((sum, e) => sum + e.amount, 0);
 
   const years = [...new Set(expenses.map((e) => new Date(e.date).getFullYear()))];
-  const sortedYears = years.sort((a, b) => b - a);
 
   // Export to Excel
   const exportToExcel = () => {
