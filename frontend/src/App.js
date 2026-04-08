@@ -7,7 +7,7 @@ import ExpensePieChart from "./ExpensePieChart";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 
-// ✅ User ID function (ONLY ONE SOURCE)
+// ✅ AFTER ALL IMPORTS
 function getUserId() {
   let userId = localStorage.getItem("userId");
 
