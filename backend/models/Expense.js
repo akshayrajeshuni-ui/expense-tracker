@@ -14,9 +14,15 @@ const expenseSchema = new mongoose.Schema({
     required: true
   },
   date: {
-  type: Date,
-  required: true
-}
+    type: Date,
+    required: true
+  }, // ✅ comma here
+
+  // ✅ userId should be OUTSIDE date
+  userId: {
+    type: String,
+    required: true
+  }
 });
 
 module.exports = mongoose.model("Expense", expenseSchema);

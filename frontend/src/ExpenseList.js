@@ -4,11 +4,16 @@ import axios from "axios";
 function ExpenseList({ expenses, refresh }) {
 
   const deleteExpense = async (id) => {
-    await axios.delete(`https://expense-tracker-backend-a0cg.onrender.com/api/expenses/${id}`);
-    refresh(); // 🔥 update list after delete
-  };
+  const userId = localStorage.getItem("userId"); // ✅ get userId
 
- return (
+  await axios.delete(
+    `https://expense-tracker-backend-a0cg.onrender.com/api/expenses/${id}?userId=${userId}`
+  );
+
+  refresh(); // 🔥 update list after delete
+ };
+
+ return (``
   <div>
     <h2 className="text-xl font-semibold mb-2">Expenses</h2>
 
