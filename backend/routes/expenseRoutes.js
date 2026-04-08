@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 const Expense = require("../models/Expense");
 
+
 // ➕ Add Expense
 router.post("/", async (req, res) => {
   try {
     const { title, amount, category, date, userId } = req.body;
 
-    // ✅ validation
     if (!userId) {
       return res.status(400).json({ message: "UserId required" });
     }
@@ -28,17 +28,16 @@ router.post("/", async (req, res) => {
   }
 });
 
-// 📥 Get Expenses
+
+// 📥 Get Expenses (FILTERED BY USER)
 router.get("/", async (req, res) => {
   try {
     const { userId } = req.query;
 
-    // ✅ validation
     if (!userId) {
       return res.status(400).json({ message: "UserId required" });
     }
 
-    // ✅ filter by user
     const expenses = await Expense.find({ userId });
 
     res.json(expenses);
@@ -47,7 +46,9 @@ router.get("/", async (req, res) => {
     res.status(500).json(err);
   }
 });
-// ❌ Delete Expense
+
+
+// ❌ Delete Expense (ONLY OWN DATA)
 router.delete("/:id", async (req, res) => {
   try {
     const { userId } = req.query;
@@ -74,18 +75,8 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-    if (!expense) {
-      return res.status(404).json({ message: "Not found or not authorized" });
-    }
 
-    res.json({ message: "Deleted successfully" });
-
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-// 🧪 Test route (keep it)
+// 🧪 Test route
 router.get("/test", (req, res) => {
   res.send("Test route working");
 });
