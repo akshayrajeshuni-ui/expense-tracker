@@ -5,10 +5,16 @@ function ExpenseList({ expenses, refresh }) {
 
   const deleteExpense = async (id) => {
     try {
-      const userId = localStorage.getItem("userId");
+      
+      const token = localStorage.getItem("token");
 
       await axios.delete(
-        `https://expense-tracker-backend-a0cg.onrender.com/api/expenses/${id}?userId=${userId}`
+        `https://expense-tracker-backend-a0cg.onrender.com/api/expenses/${id}`,
+        {
+          headers: {
+            Authorization: token
+           }
+        }
       );
 
       refresh();

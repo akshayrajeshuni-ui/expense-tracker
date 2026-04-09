@@ -13,14 +13,16 @@ function ExpenseForm({ refresh }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const userId = localStorage.getItem("userId");
-
     try {
+      const token = localStorage.getItem("token");
+
       await axios.post(
         "https://expense-tracker-backend-a0cg.onrender.com/api/expenses",
+        data,
         {
-          ...data,
-          userId // ✅ VERY IMPORTANT
+          headers: {
+            Authorization: token
+          }
         }
       );
 

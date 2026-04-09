@@ -1,3 +1,4 @@
+import Login from "./Login";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ExpenseForm from "./ExpenseForm";
@@ -7,20 +8,7 @@ import ExpensePieChart from "./ExpensePieChart";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 
-// ✅ AFTER ALL IMPORTS
-function getUserId() {
-  let userId = localStorage.getItem("userId");
 
-  if (!userId) {
-    userId = "user_" + Date.now();
-    localStorage.setItem("userId", userId);
-    console.log("NEW userId:", userId);
-  } else {
-    console.log("EXISTING userId:", userId);
-  }
-
-  return userId;
-}
 
 function App() {
   const [search, setSearch] = useState("");
@@ -29,24 +17,38 @@ function App() {
   const [filter] = useState("all");
   const [selectedYear] = useState("all");
   const [theme, setTheme] = useState("light");
+  const [loggedIn, setLoggedIn] = useState(
+  !!localStorage.getItem("token")
+  );
   const [fromDate] = useState("");
   const [toDate] = useState("");
 
-  // ✅ Create userId once when app loads
-  useEffect(() => {
-    getUserId();
-  }, []);
+  
 
   // ✅ Fetch data with userId
   const fetchExpenses = async () => {
-    const userId = getUserId();
+  try {
+    const token = localStorage.getItem("token");
 
     const res = await axios.get(
-      `https://expense-tracker-backend-a0cg.onrender.com/api/expenses?userId=${userId}`
+      "https://expense-tracker-backend-a0cg.onrender.com/api/expenses",
+      {
+        headers: {
+          Authorization: token
+        }
+      }
     );
 
     setExpenses(res.data);
-  };
+
+  } catch (err) {
+    console.error(err);
+    alert("Session expired. Please login again.");
+
+    localStorage.removeItem("token");
+    window.location.reload();
+  }
+ };
 
   // Theme toggle
   useEffect(() => {
@@ -59,8 +61,10 @@ function App() {
 
   // Load data on start
   useEffect(() => {
+  if (loggedIn) {
     fetchExpenses();
-  }, []);
+  }
+ }, [loggedIn]);
 
   // Filter logic
   const filteredExpenses = expenses.filter((e) => {
@@ -128,6 +132,10 @@ function App() {
 
     saveAs(fileData, "Expenses.xlsx");
   };
+
+  if (!loggedIn) {
+  return <Login setLoggedIn={setLoggedIn} />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-black dark:text-white p-5">
