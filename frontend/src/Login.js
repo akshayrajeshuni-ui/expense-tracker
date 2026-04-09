@@ -21,21 +21,35 @@ function Login({ setLoggedIn }) {
   };
 
   return (
-    <div style={{ maxWidth: "300px", margin: "100px auto" }}>
-      <h2>Login</h2>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-80">
 
-      <input
-        placeholder="Email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
+        <h2 className="text-2xl font-bold mb-4 text-center">
+          Login
+        </h2>
 
-      <input
-        type="password"
-        placeholder="Password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <input
+          type="email"
+          placeholder="Email"
+          className="w-full p-2 mb-3 border rounded bg-white text-black dark:bg-gray-700 dark:text-white"
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-      <button onClick={handleLogin}>Login</button>
+        <input
+          type="password"
+          placeholder="Password"
+          className="w-full p-2 mb-4 border rounded bg-white text-black dark:bg-gray-700 dark:text-white"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button
+          onClick={handleLogin}
+          className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+        >
+          Login
+        </button>
+
+      </div>
     </div>
   );
 }
