@@ -53,6 +53,22 @@ router.delete("/:id", verify, async (req, res) => {
 
   res.json({ message: "Deleted" });
 });
+router.put("/:id", verify, async (req, res) => {
+  try {
+    const { title, amount, category, date } = req.body;
+
+    const updated = await Expense.findOneAndUpdate(
+      { _id: req.params.id, userId: req.userId },
+      { title, amount, category, date },
+      { new: true }
+    );
+
+    res.json(updated);
+
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 
 // 🧪 Test route
