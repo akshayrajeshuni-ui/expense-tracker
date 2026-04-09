@@ -1,7 +1,24 @@
 const express = require("express");
 const router = express.Router();
 const Expense = require("../models/Expense");
+const jwt = require("jsonwebtoken");
 
+// ✅ Middleware to verify token
+const verify = (req, res, next) => {
+  const token = req.headers.authorization;
+
+  if (!token) {
+    return res.status(401).json("No token");
+  }
+
+  try {
+    const decoded = jwt.verify(token, "secretkey");
+    req.userId = decoded.id;
+    next();
+  } catch (err) {
+    res.status(400).json("Invalid token");
+  }
+};
 
 // ➕ Add Expense
 router.post("/", verify, async (req, res) => {
